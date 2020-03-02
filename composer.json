@@ -1,0 +1,29 @@
+{
+    "name": "evotodi/log-viewer-bundle",
+    "description": "Desc goes here",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "evotodi",
+            "email": "evotodi@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "ext-json": "*",
+        "greenskies/collection": "^0.0.3",
+        "jdorn/sql-formatter": "^1.2"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Evotodi\\LogViewerBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+        }
+    }
+}

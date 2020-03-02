@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>{% block title %}Log Viewer{% endblock %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/evotodilogviewer/vendor/bootstrap/css/bootstrap.min.css') }}">
+    {% endblock %}
+    {% block javascripts_head %}
+
+    {% endblock %}
+</head>
+
+<body class="text-center">
+{% block flash_messages %}
+    <div id="messages">
+        <br>
+        {% for type, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    {{ message | raw }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block body %}{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/evotodilogviewer/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+{% endblock %}
+</body>
+</html>

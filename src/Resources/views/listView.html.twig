@@ -1,0 +1,24 @@
+{% extends '@EvotodiLogViewer/base_content.html.twig' %}
+{% block content_body %}
+<table class="table table-bordered">
+    <tr>
+        <th colspan="2">
+            <a href="/">Home</a>
+        </th>
+    </tr>
+    {% for log in logs %}
+        <tr>
+            <td>
+                <a href="{{ url('_log_viewer_viewer') }}?log={{ log }}">
+                    {{ log }}
+                </a>
+            </td>
+            <td>
+                <a href="{{ url('_log_viewer_viewer') }}?log={{ log }}&delete=true">
+                    delete
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

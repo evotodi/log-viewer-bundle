@@ -1,0 +1,16 @@
+{# base_content #}
+{# Created by Justin on 2/25/2020 #}
+
+{% extends '@EvotodiLogViewer/base.html.twig' %}
+
+{% block body %}
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="{% block content_class %}p-3 mt-4{% endblock %}">
+					{% block content_body %}{% endblock %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
