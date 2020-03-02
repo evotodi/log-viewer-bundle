@@ -5,6 +5,8 @@ namespace Evotodi\LogViewerBundle\Model;
 
 class LogList
 {
+
+
     public function getLogList($logDirectory)
     {
         $logs = [];

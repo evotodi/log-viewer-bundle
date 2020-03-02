@@ -7,3 +7,4 @@ bin/
 build/logs/
 /tests/Controller/cache/
 /tests/cache/
+/config/

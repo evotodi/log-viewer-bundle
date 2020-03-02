@@ -14,6 +14,7 @@ class EvotodiLogViewerExtension extends Extension
 	/**
 	 * @param array $configs
 	 * @param ContainerBuilder $container
+	 * @return array
 	 * @throws Exception
 	 */
 	public function load(array $configs, ContainerBuilder $container)

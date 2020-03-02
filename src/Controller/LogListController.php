@@ -4,8 +4,11 @@ namespace Evotodi\LogViewerBundle\Controller;
 
 use Evotodi\LogViewerBundle\Model\LogList;
 use Psr\Container\ContainerInterface;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
@@ -33,21 +36,22 @@ class LogListController extends AbstractController implements ServiceSubscriberI
     	$logs = [];
 
     	if($this->useAppLogs){
-		    $logDir = $this->parameterBag->get('kernel.logs_dir');
-            $logs = (new LogList())->getLogList($logDir);
+		    $finder = new Finder();
+		    $finder->files()->in($this->parameterBag->get('kernel.logs_dir'));
+		    foreach ($finder as $file){
+			    $logs[] = ['name' => $file->getFilename(), 'path' => $file->getRealPath(), 'pattern' => null, 'pattern_name' => null];
+		    }
+	    }
+
+    	foreach ($this->logFiles as $logFile){
+    		if(is_null($logFile['name'])){
+    			$logFile['name'] = basename($logFile['path']);
+		    }
+    		$logs[] = ['name' => $logFile['name'], 'path' => $logFile['path'], 'pattern' => $logFile['pattern'], 'pattern_name' => $logFile['pattern_name']];
 	    }
 
         return $this->render('@EvotodiLogViewer/listView.html.twig', [
             'logs' => $logs
         ]);
     }
-
-	public static function getSubscribedServices()
-	{
-		return [
-
-		];
-	}
-
-
 }
