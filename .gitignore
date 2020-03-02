@@ -5,3 +5,4 @@ composer\.lock
 bin/
 
 build/logs/
+/tests/Controller/cache/
