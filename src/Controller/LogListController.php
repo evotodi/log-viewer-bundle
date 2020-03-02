@@ -39,7 +39,7 @@ class LogListController extends AbstractController implements ServiceSubscriberI
 		    $finder = new Finder();
 		    $finder->files()->in($this->parameterBag->get('kernel.logs_dir'));
 		    foreach ($finder as $file){
-			    $logs[] = ['name' => $file->getFilename(), 'path' => $file->getRealPath(), 'pattern' => null];
+			    $logs[] = ['name' => $file->getFilename(), 'path' => $file->getRealPath(), 'pattern' => null, 'days' => 0];
 		    }
 	    }
 
@@ -47,7 +47,7 @@ class LogListController extends AbstractController implements ServiceSubscriberI
     		if(is_null($logFile['name'])){
     			$logFile['name'] = basename($logFile['path']);
 		    }
-    		$logs[] = ['name' => $logFile['name'], 'path' => $logFile['path'], 'pattern' => $logFile['pattern']];
+    		$logs[] = ['name' => $logFile['name'], 'path' => $logFile['path'], 'pattern' => $logFile['pattern'], 'days' => $logFile['days']];
 	    }
 
         return $this->render('@EvotodiLogViewer/listView.html.twig', [

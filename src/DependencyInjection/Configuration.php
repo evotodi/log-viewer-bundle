@@ -21,6 +21,7 @@ class Configuration implements ConfigurationInterface
 					->children()
 						->scalarNode('path')->info("Use full path")->end()
 						->scalarNode('name')->info("Pretty name to display else file name")->defaultNull()->end()
+						->integerNode('days')->info('Number of days to pull from log. See ddtraceweb/monolog-parser.')->defaultValue(0)->end()
 						->scalarNode('pattern')->info('See ddtraceweb/monolog-parser for patterns.')->defaultNull()->end()
 					->end()
 				->end()
