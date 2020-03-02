@@ -24,9 +24,10 @@ class EvotodiLogViewerExtension extends Extension
 		$configuration = $this->getConfiguration($configs, $container);
 		$config = $this->processConfiguration($configuration, $configs);
 
-//		$config['log_files'][] = 'test1';
-//		$config['log_files'][] = 'test2';
-//		dump($config);die;
+		$definition = $container->getDefinition('evotodi_log_viewer.log_list_controller');
+		$definition->replaceArgument(1, $config['log_files']);
+		$definition->replaceArgument(2, $config['show_app_logs']);
+
 		return $config;
 	}
 
