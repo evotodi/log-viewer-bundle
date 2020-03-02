@@ -9,7 +9,7 @@
     {% for log in logs %}
         <tr>
             <td>
-                <a href="{{ url('_log_viewer_viewer') }}?name={{ log.name|url_encode }}&log={{ log.path|url_encode }}&pattern={% if log.pattern is empty %}null{% else %}{{ log.pattern|url_encode }}{% endif %}&pattern_name={% if log.pattern_name is empty %}null{% else %}{{ log.pattern_name|url_encode }}{% endif %}">
+                <a href="{{ url('_log_viewer_viewer') }}?name={{ log.name|url_encode }}&log={{ log.path|url_encode }}&pattern={% if log.pattern is empty %}null{% else %}{{ log.pattern|url_encode }}{% endif %}">
                     {{ log.name }}
                 </a>
             </td>

@@ -22,7 +22,6 @@ class Configuration implements ConfigurationInterface
 						->scalarNode('path')->info("Use full path")->end()
 						->scalarNode('name')->info("Pretty name to display else file name")->defaultNull()->end()
 						->scalarNode('pattern')->info('See ddtraceweb/monolog-parser for patterns.')->defaultNull()->end()
-						->scalarNode('pattern_name')->info('See ddtraceweb/monolog-parser')->defaultNull()->end()
 					->end()
 				->end()
 			->end()

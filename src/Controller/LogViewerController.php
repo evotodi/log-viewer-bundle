@@ -18,10 +18,12 @@ class LogViewerController extends AbstractController
     {
         $log = urldecode($request->query->get('log'));
         $name = urldecode($request->query->get('name'));
+        $pattern = urldecode($request->query->get('pattern'));
         $delete = filter_var($request->query->get('delete'), FILTER_VALIDATE_BOOLEAN);
 
         dump($name);
         dump($log);
+        dd($pattern);
 
         if(!file_exists($log)){
 	        throw new FileNotFoundException(sprintf("Log file \"%s\" was not found!", $log));
