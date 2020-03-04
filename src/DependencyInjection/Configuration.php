@@ -23,6 +23,7 @@ class Configuration implements ConfigurationInterface
 						->scalarNode('name')->info("Pretty name to display else file name")->defaultNull()->end()
 						->integerNode('days')->info('Number of days to pull from log. See ddtraceweb/monolog-parser.')->defaultValue(0)->end()
 						->scalarNode('pattern')->info('See ddtraceweb/monolog-parser for patterns.')->defaultNull()->end()
+						->scalarNode('date_format')->info('PHP style date format of log file')->defaultValue('Y-m-d H:i:s')->end()
 					->end()
 				->end()
 			->end()

@@ -7,15 +7,24 @@
     <services>
         <defaults public="false" />
 
-        <service id="evotodi_log_viewer.log_list_controller" class="Evotodi\LogViewerBundle\Controller\LogListController" public="true">
+        <service id="evotodi_log_list.log_list_service" class="Evotodi\LogViewerBundle\Service\LogList">
             <argument type="service" id="parameter_bag" />
             <argument/>
             <argument/>
         </service>
+        <service id="Evotodi\LogViewerBundle\Service\LogList" alias="evotodi_log_list.log_list_service"/>
+
+        <service id="evotodi_log_viewer.log_list_controller" class="Evotodi\LogViewerBundle\Controller\LogListController" public="true">
+            <argument type="service" id="evotodi_log_list.log_list_service" />
+        </service>
         <service id="Evotodi\LogViewerBundle\Controller\LogListController" alias="evotodi_log_viewer.log_list_controller"/>
 
-        <service id="evotodi_log_viewer.log_viewer_controller" class="Evotodi\LogViewerBundle\Controller\LogViewerController" public="true"/>
+        <service id="evotodi_log_viewer.log_viewer_controller" class="Evotodi\LogViewerBundle\Controller\LogViewerController" public="true">
+            <argument type="service" id="evotodi_log_list.log_list_service" />
+        </service>
         <service id="Evotodi\LogViewerBundle\Controller\LogViewerController" alias="evotodi_log_viewer.log_list_controller"/>
+
+
 
     </services>
 </container>

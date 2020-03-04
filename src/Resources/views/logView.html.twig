@@ -67,7 +67,7 @@
                     {% for line in log %}
                         <tr class="{{ line.level|lower }}">
                             <td>
-                                {{ line.dateTime }}
+                                {% if line.dateTime == false %}Date Parse Error{% else %}{{ line.dateTime|date('Y-m-d H:i:s') }}{% endif %}
                             </td>
                             <td>
                                 {{ line.type }}

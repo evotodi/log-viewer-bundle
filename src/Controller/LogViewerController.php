@@ -2,7 +2,9 @@
 
 namespace Evotodi\LogViewerBundle\Controller;
 
-use Evotodi\LogViewerBundle\Model\LogView;
+use Evotodi\LogViewerBundle\Reader\LogReader;
+use Evotodi\LogViewerBundle\Service\LogList;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,36 +12,62 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LogViewerController extends AbstractController
 {
-    /**
+	/**
+	 * @var LogList
+	 */
+	private $logList;
+
+	public function __construct(LogList $logList)
+	{
+		$this->logList = $logList;
+	}
+
+	/**
      * @param Request $request
      * @return Response
      */
     public function logViewAction(Request $request)
     {
-        $log = urldecode($request->query->get('log'));
-        $name = urldecode($request->query->get('name'));
-        $pattern = urldecode($request->query->get('pattern'));
+        $id = urldecode($request->query->get('id'));
         $delete = filter_var($request->query->get('delete'), FILTER_VALIDATE_BOOLEAN);
+	    $logs = $this->logList->getLogList();
 
-        dump($name);
-        dump($log);
-        dd($pattern);
-
-        if(!file_exists($log)){
-	        throw new FileNotFoundException(sprintf("Log file \"%s\" was not found!", $log));
+        if(!file_exists($logs[$id]['path'])){
+	        throw new FileNotFoundException(sprintf("Log file \"%s\" was not found!", $logs[$id]['path']));
         }
 
         if($delete) {
-            unlink($log);
+            unlink($logs[$id]['path']);
             return $this->redirectToRoute('_log_viewer_list');
         }
 
-        if (file_exists($log)) {
-            $log = file_get_contents($log);
-            $context['log'] = LogView::logToArray($log);
-        } else {
-            $context['noLog'] = true;
+        $reader = new LogReader($logs[$id]['path'], $logs[$id]['date_format'], $logs[$id]['days']);
+        if(!is_null($logs[$id]['pattern'])){
+        	$reader->getParser()->registerPattern('NewPattern', $logs[$id]['pattern']);
+        	$reader->setPattern('NewPattern');
         }
+
+	    $lines = [];
+	    foreach ($reader as $line){
+	    	try{
+				$lines[] = [
+					'dateTime' => $line['date'],
+					'type' => $line['logger'],
+					'level' => $line['level'],
+					'message' => $line['message'],
+				];
+		    }catch (Exception $e){
+	    		continue;
+		    }
+
+	    }
+
+	    if(!empty($lines)){
+	    	$context['log'] = $lines;
+	    }else{
+	    	$context['noLog'] = true;
+	    }
+
         return $this->render('@EvotodiLogViewer/logView.html.twig', $context);
     }
 }

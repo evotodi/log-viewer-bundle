@@ -9,14 +9,20 @@
     {% for log in logs %}
         <tr>
             <td>
-                <a href="{{ url('_log_viewer_viewer') }}?name={{ log.name|url_encode }}&log={{ log.path|url_encode }}&pattern={% if log.pattern is empty %}null{% else %}{{ log.pattern|url_encode }}{% endif %}&days={{ log.days }}">
+                {% if log.exists %}
+                <a href="{{ url('_log_viewer_viewer') }}?id={{ log.id }}">
                     {{ log.name }}
                 </a>
+                {% else %}
+                    {{ log.name }} not found
+                {% endif %}
             </td>
             <td>
-                <a href="{{ url('_log_viewer_viewer') }}?log={{ log.path|url_encode }}&delete=true">
+                {% if log.exists %}
+                <a href="{{ url('_log_viewer_viewer') }}?id={{ log.id }}&delete=true">
                     delete
                 </a>
+                {% endif %}
             </td>
         </tr>
     {% endfor %}

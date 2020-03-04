@@ -2,27 +2,21 @@
 
 namespace Evotodi\LogViewerBundle\Controller;
 
-use Evotodi\LogViewerBundle\Model\LogList;
-use Psr\Container\ContainerInterface;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
+use Evotodi\LogViewerBundle\Service\LogList;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 class LogListController extends AbstractController implements ServiceSubscriberInterface
 {
-	private $parameterBag;
-	private $logFiles;
-	private $useAppLogs;
+	/**
+	 * @var LogList
+	 */
+	private $logList;
 
-	public function __construct(ParameterBagInterface $parameterBag, array $logFiles, bool $useAppLogs = false)
+	public function __construct(LogList $logList)
 	{
-		$this->parameterBag = $parameterBag;
-		$this->logFiles = $logFiles;
-		$this->useAppLogs = $useAppLogs;
+		$this->logList = $logList;
 	}
 
 	/**
@@ -30,26 +24,7 @@ class LogListController extends AbstractController implements ServiceSubscriberI
 	 */
     public function logListAction()
     {
-    	dump($this->logFiles);
-    	dump($this->useAppLogs);
-
-    	$logs = [];
-
-    	if($this->useAppLogs){
-		    $finder = new Finder();
-		    $finder->files()->in($this->parameterBag->get('kernel.logs_dir'));
-		    foreach ($finder as $file){
-			    $logs[] = ['name' => $file->getFilename(), 'path' => $file->getRealPath(), 'pattern' => null, 'days' => 0];
-		    }
-	    }
-
-    	foreach ($this->logFiles as $logFile){
-    		if(is_null($logFile['name'])){
-    			$logFile['name'] = basename($logFile['path']);
-		    }
-    		$logs[] = ['name' => $logFile['name'], 'path' => $logFile['path'], 'pattern' => $logFile['pattern'], 'days' => $logFile['days']];
-	    }
-
+		$logs = $this->logList->getLogList();
         return $this->render('@EvotodiLogViewer/listView.html.twig', [
             'logs' => $logs
         ]);
