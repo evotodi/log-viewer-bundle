@@ -31,6 +31,7 @@ class LogViewerController extends AbstractController
         $id = urldecode($request->query->get('id'));
         $delete = filter_var($request->query->get('delete'), FILTER_VALIDATE_BOOLEAN);
 	    $logs = $this->logList->getLogList();
+		$context = [];
 
         if(!file_exists($logs[$id]['path'])){
 	        throw new FileNotFoundException(sprintf("Log file \"%s\" was not found!", $logs[$id]['path']));
@@ -67,6 +68,8 @@ class LogViewerController extends AbstractController
 	    }else{
 	    	$context['noLog'] = true;
 	    }
+
+	    $context['levels'] = $logs[$id]['levels'];
 
         return $this->render('@EvotodiLogViewer/logView.html.twig', $context);
     }

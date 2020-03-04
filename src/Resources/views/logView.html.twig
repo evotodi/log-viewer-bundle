@@ -21,35 +21,35 @@
                 <div class="form">
                     <form>
                         <label class="checkbox-inline">
-                            <input type="checkbox" checked onclick="toggle('DEBUG', this)">
+                            <input type="checkbox" checked onclick="toggle('{{levels.debug}}', this)">
                             debug
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" checked onclick="toggle('INFO', this)">
+                            <input type="checkbox" checked onclick="toggle('{{ levels.info }}', this)">
                             info
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" checked onclick="toggle('NOTICE', this)">
+                            <input type="checkbox" checked onclick="toggle('{{levels.notice}}', this)">
                             notice
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" checked onclick="toggle('WARNING', this)">
+                            <input type="checkbox" checked onclick="toggle('{{levels.warning}}', this)">
                             warning
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" checked onclick="toggle('ERROR', this)">
+                            <input type="checkbox" checked onclick="toggle('{{levels.error}}', this)">
                             error
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" checked onclick="toggle('CRITICAL', this)">
+                            <input type="checkbox" checked onclick="toggle('{{levels.critical}}', this)">
                             critical
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" checked onclick="toggle('ALERT', this)">
+                            <input type="checkbox" checked onclick="toggle('{{levels.alert}}', this)">
                             alert
                         </label>
                         <label class="checkbox-inline">
-                            <input type="checkbox" checked onclick="toggle('EMERGENCY', this)">
+                            <input type="checkbox" checked onclick="toggle('{{levels.emergency}}', this)">
                             emergency
                         </label>
                     </form>

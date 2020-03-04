@@ -37,6 +37,17 @@ log_files:
 
         # (Optional) PHP style date format of log file
         date_format: 'Y-m-d H:i:s'
+        
+        # (Optional) Log level spelling. Case sensitive
+        levels:
+            debug: DEBUG
+            info: INFO
+            notice: NOTICE
+            warning: WARNING
+            error: ERROR
+            alert: ALERT
+            critical: CRITICAL
+            emergency: EMERGENCY
 
 # Show App logs in var/log
 show_app_logs: true
@@ -60,6 +71,9 @@ if greater than DateTime('now') minus 5 days.
 This should be the php date format of the date portion of the pattern. Default is Y-m-d H:i:s
 /
 [PHP DateFormat](https://www.php.net/manual/en/function.date.php)
+
+#### levels
+Override the default spelling for each level. e.g. WARNING -> WARN
 
 ## Thanks
 Thanks to ddtraceweb/monolog-parser and greenskies/web-log-viewer-bundle.

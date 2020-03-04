@@ -11,7 +11,16 @@ class LogList
 	private $parameterBag;
 	private $logFiles;
 	private $useAppLogs;
-
+	protected $levels = [
+		"debug" => "DEBUG",
+        "info" => "INFO",
+        "notice" => "NOTICE",
+        "warning" => "WARNING",
+        "error" => "ERROR",
+        "alert" => "ALERT",
+        "critical" => "CRITICAL",
+        "emergency" => "EMERGENCY",
+	];
 	public function __construct(ParameterBagInterface $parameterBag, array $logFiles, bool $useAppLogs = false)
 	{
 		$this->parameterBag = $parameterBag;
@@ -28,7 +37,7 @@ class LogList
 		    $finder = new Finder();
 		    $finder->files()->in($this->parameterBag->get('kernel.logs_dir'));
 		    foreach ($finder as $file){
-			    $logs[] = ['id' => $id, 'name' => $file->getFilename(), 'path' => $file->getRealPath(), 'pattern' => null, 'days' => 0, 'date_format' => 'Y-m-d H:i:s', 'exists' => true];
+			    $logs[] = ['id' => $id, 'name' => $file->getFilename(), 'path' => $file->getRealPath(), 'pattern' => null, 'days' => 0, 'date_format' => 'Y-m-d H:i:s', 'exists' => true, 'levels' => $this->levels];
 			    $id++;
 		    }
 	    }
@@ -41,10 +50,9 @@ class LogList
 		    if(is_null($logFile['name'])){
 			    $logFile['name'] = basename($logFile['path']);
 		    }
-		    $logs[] = ['id' => $id, 'name' => $logFile['name'], 'path' => $logFile['path'], 'pattern' => $logFile['pattern'], 'days' => $logFile['days'], 'date_format' => $logFile['date_format'], 'exists' => $exists];
+		    $logs[] = ['id' => $id, 'name' => $logFile['name'], 'path' => $logFile['path'], 'pattern' => $logFile['pattern'], 'days' => $logFile['days'], 'date_format' => $logFile['date_format'], 'exists' => $exists, 'levels' => $logFile['levels']];
 		    $id++;
 	    }
         return $logs;
     }
-
 }
