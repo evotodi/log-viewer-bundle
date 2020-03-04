@@ -10,7 +10,7 @@ class Configuration implements ConfigurationInterface
 
 	public function getConfigTreeBuilder()
 	{
-		$treeBuilder = new TreeBuilder('framework');
+		$treeBuilder = new TreeBuilder('evotodi_log_viewer');
 		$rootNode = $treeBuilder->getRootNode();
 
 		$rootNode->children()
