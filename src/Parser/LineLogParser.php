@@ -19,8 +19,7 @@ class LineLogParser implements LogParserInterface
 {
 
     protected $pattern = [
-        'default' => '/\[(?P<date>.*)\] (?P<logger>\w+).(?P<level>\w+): (?P<message>[^\[\{]+) (?P<context>[\[\{].*[\]\}]) (?P<extra>[\[\{].*[\]\}])/',
-        'error'   => '/\[(?P<date>.*)\] (?P<logger>\w+).(?P<level>\w+): (?P<message>(.*)+) (?P<context>[^ ]+) (?P<extra>[^ ]+)/'
+        'default' => '/\[(?P<date>.*)\] (?P<logger>\w+).(?P<level>\w+): (?P<message>[^\[\{].*[\]\}])/',
     ];
 
 
@@ -51,9 +50,7 @@ class LineLogParser implements LogParserInterface
             'date'    => $date,
             'logger'  => $data['logger'],
             'level'   => $data['level'],
-            'message' => $data['message'],
-            'context' => json_decode($data['context'], true),
-            'extra'   => json_decode($data['extra'], true)
+            'message' => $data['message']
         );
 
         if (0 === $days) {

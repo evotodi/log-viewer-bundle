@@ -1,4 +1,4 @@
-vendor/
+/vendor/
 
 composer\.lock
 
@@ -8,3 +8,5 @@ build/logs/
 /tests/Controller/cache/
 /tests/cache/
 /config/
+.idea/
+var/
