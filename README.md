@@ -22,36 +22,36 @@ Create the config yaml file `config/packages/evo_log_viewer.yaml`
 ```yaml
 # List of log files to show
 evo_log_viewer:
-	log_files:
-		log_name:
-			# Use full path
-			path: 'Some/Full/Path/to/Log/File.Ext'
+    log_files:
+        log_name:
+            # Use full path
+            path: 'Some/Full/Path/to/Log/File.Ext'
 
-			# Pretty name to display else file name
-			name: My Log Files Pretty Name 
+            # Pretty name to display else file name
+            name: My Log Files Pretty Name 
 
-			# (Optional) Number of days to pull from log. See ddtraceweb/monolog-parser.
-			days: 0
+            # (Optional) Number of days to pull from log. See ddtraceweb/monolog-parser.
+            days: 0
 
-			# (Optional) See ddtraceweb/monolog-parser for patterns.
-			pattern: null
+            # (Optional) See ddtraceweb/monolog-parser for patterns.
+            pattern: null
 
-			# (Optional) PHP style date format of log file
-			date_format: 'Y-m-d H:i:s'
-			
-			# (Optional) Log level spelling. Case sensitive
-			levels:
-				debug: DEBUG
-				info: INFO
-				notice: NOTICE
-				warning: WARNING
-				error: ERROR
-				alert: ALERT
-				critical: CRITICAL
-				emergency: EMERGENCY
+            # (Optional) PHP style date format of log file
+            date_format: 'Y-m-d H:i:s'
+            
+            # (Optional) Log level spelling. Case sensitive
+            levels:
+                debug: DEBUG
+                info: INFO
+                notice: NOTICE
+                warning: WARNING
+                error: ERROR
+                alert: ALERT
+                critical: CRITICAL
+                emergency: EMERGENCY
 
-	# Show App logs in var/log
-	show_app_logs: true
+    # Show App logs in var/log
+    show_app_logs: true
 ```
 ## Advanced Configuration
 
