@@ -23,7 +23,8 @@ Create the config yaml file `config/packages/evo_log_viewer.yaml`
 # List of log files to show
 evo_log_viewer:
     log_files:
-        log_name:
+        # Unique identifier for the logfile
+        somelog1:
             # Use full path
             path: 'Some/Full/Path/to/Log/File.Ext'
 
@@ -49,6 +50,10 @@ evo_log_viewer:
                 alert: ALERT
                 critical: CRITICAL
                 emergency: EMERGENCY
+
+        somelog2:
+            path: '/path/to/logfile.log'
+            name: Pretty Logfile Name
 
     # Show App logs in var/log
     show_app_logs: true
