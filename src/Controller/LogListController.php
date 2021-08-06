@@ -9,10 +9,7 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 class LogListController extends AbstractController implements ServiceSubscriberInterface
 {
-	/**
-	 * @var LogList
-	 */
-	private $logList;
+	private LogList $logList;
 
 	public function __construct(LogList $logList)
 	{
@@ -22,7 +19,7 @@ class LogListController extends AbstractController implements ServiceSubscriberI
 	/**
 	 * @return Response
 	 */
-    public function logListAction()
+    public function logListAction(): Response
     {
 		$logs = $this->logList->getLogList();
         return $this->render('@EvotodiLogViewer/listView.html.twig', [

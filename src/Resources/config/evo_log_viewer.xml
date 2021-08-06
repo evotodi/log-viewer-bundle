@@ -16,11 +16,17 @@
 
         <service id="evotodi_log_viewer.log_list_controller" class="Evotodi\LogViewerBundle\Controller\LogListController" public="true">
             <argument type="service" id="evotodi_log_list.log_list_service" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
         </service>
         <service id="Evotodi\LogViewerBundle\Controller\LogListController" alias="evotodi_log_viewer.log_list_controller"/>
 
         <service id="evotodi_log_viewer.log_viewer_controller" class="Evotodi\LogViewerBundle\Controller\LogViewerController" public="true">
             <argument type="service" id="evotodi_log_list.log_list_service" />
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
         </service>
         <service id="Evotodi\LogViewerBundle\Controller\LogViewerController" alias="evotodi_log_viewer.log_list_controller"/>
 

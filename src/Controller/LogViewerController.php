@@ -12,10 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LogViewerController extends AbstractController
 {
-	/**
-	 * @var LogList
-	 */
-	private $logList;
+	private LogList $logList;
 
 	public function __construct(LogList $logList)
 	{
@@ -26,7 +23,7 @@ class LogViewerController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function logViewAction(Request $request)
+    public function logViewAction(Request $request): Response
     {
         $id = urldecode($request->query->get('id'));
         $delete = filter_var($request->query->get('delete'), FILTER_VALIDATE_BOOLEAN);

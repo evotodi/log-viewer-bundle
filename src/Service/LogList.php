@@ -8,10 +8,10 @@ use Symfony\Component\Finder\Finder;
 
 class LogList
 {
-	private $parameterBag;
-	private $logFiles;
-	private $useAppLogs;
-	protected $levels = [
+	private ParameterBagInterface $parameterBag;
+	private array $logFiles;
+	private bool $useAppLogs;
+	protected array $levels = [
 		"debug" => "DEBUG",
         "info" => "INFO",
         "notice" => "NOTICE",
@@ -28,7 +28,7 @@ class LogList
 		$this->useAppLogs = $useAppLogs;
 	}
 
-	public function getLogList()
+	public function getLogList(): array
     {
 	    $logs = [];
 		$id = 0;
