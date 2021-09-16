@@ -2,9 +2,15 @@
 {% block content_body %}
 <table class="table table-bordered">
     <tr>
-        <th colspan="2">
+        <th colspan="4">
             <a href="/">Home</a>
         </th>
+    </tr>
+    <tr>
+        <th>Log Name</th>
+        <th>File Size(bytes)</th>
+        <th>Modification Time</th>
+        <th>Actions</th>
     </tr>
     {% for log in logs %}
         <tr>
@@ -15,6 +21,16 @@
                 </a>
                 {% else %}
                     {{ log.name }} not found
+                {% endif %}
+            </td>
+            <td>
+                {% if log.exists %}
+                    {{ log.size }}
+                {% endif %}
+            </td>
+            <td>
+                {% if log.exists %}
+                    {{ log.mtime|date('Y-m-d H:i:s') }}
                 {% endif %}
             </td>
             <td>

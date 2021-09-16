@@ -17,8 +17,9 @@
                     <a href="/">Home</a>
                     <a href="{{ url('_log_viewer_list') }}">Back to logs</a>
                 </div>
-                <br>
-                <div class="form">
+                {% if use_level %}
+                    <br>
+                    <div class="form">
                     <form>
                         <label class="checkbox-inline">
                             <input type="checkbox" checked onclick="toggle('{{levels.debug}}', this)">
@@ -54,14 +55,19 @@
                         </label>
                     </form>
                 </div>
+                {% endif %}
             </div>
             <br>
             <div class="content">
                 <table class="table table-bordered">
                     <tr class="header">
                         <th class="lvDateTime">DateTime</th>
-                        <th class="lvChannel">Channel</th>
-                        <th class="lvLevel">Level</th>
+                        {% if use_channel %}
+                            <th class="lvChannel">Channel</th>
+                        {% endif %}
+                        {% if use_level %}
+                            <th class="lvLevel">Level</th>
+                        {% endif %}
                         <th>Message</th>
                     </tr>
                     {% for line in log %}
@@ -69,12 +75,16 @@
                             <td>
                                 {% if line.dateTime == false %}Date Parse Error{% else %}{{ line.dateTime|date('Y-m-d H:i:s') }}{% endif %}
                             </td>
-                            <td>
-                                {{ line.type }}
-                            </td>
-                            <td>
-                                {{ line.level }}
-                            </td>
+                            {% if use_channel %}
+                                <td>
+                                    {{ line.channel }}
+                                </td>
+                            {% endif %}
+                            {% if use_level %}
+                                <td>
+                                    {{ line.level }}
+                                </td>
+                            {% endif %}
                             <td>
                                 {{ line.message|raw }}
                             </td>

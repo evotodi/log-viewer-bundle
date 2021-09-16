@@ -16,5 +16,5 @@ interface LogParserInterface
 	/**
 	 * @return mixed
 	 */
-    public function parse(string $log, string $dateFormat, int $days, string $pattern);
+    public function parse(string $log, string $dateFormat, bool $useChannel, bool $useLevel, int $days, string $pattern);
 }

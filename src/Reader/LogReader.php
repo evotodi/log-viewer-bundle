@@ -13,6 +13,7 @@ namespace Evotodi\LogViewerBundle\Reader;
 
 use ArrayAccess;
 use Countable;
+use Evotodi\LogViewerBundle\Models\LogFile;
 use Evotodi\LogViewerBundle\Parser\LineLogParser;
 use Evotodi\LogViewerBundle\Parser\LogParserInterface;
 use Exception;
@@ -29,11 +30,13 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
     public int $days;
     public string $pattern;
 	public string $dateFormat;
+    public bool $useChannel;
+    public bool $useLevel;
 
 
-    public function __construct($file, $dateFormat, int $days = 1, string $pattern = 'default')
+    public function __construct(LogFile $logFile, string $pattern = 'default')
     {
-        $this->file = new SplFileObject($file, 'r');
+        $this->file = new SplFileObject($logFile->getPath(), 'r');
         $i          = 0;
         while (!$this->file->eof()) {
             $this->file->current();
@@ -41,12 +44,14 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
             $i++;
         }
 
-        $this->days = $days;
+        $this->days = $logFile->getDays();
         $this->pattern = $pattern;
-		$this->dateFormat = $dateFormat;
+		$this->dateFormat = $logFile->getDateFormat();
+        $this->useChannel = $logFile->isUseChannel();
+        $this->useLevel = $logFile->isUseLevel();
 
         $this->lineCount = $i;
-        $this->parser    = $this->getDefaultParser();
+        $this->parser = $this->getDefaultParser();
     }
 
     /**
@@ -124,7 +129,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
 	 */
     public function current()
     {
-        return $this->parser->parse($this->file->current(), $this->dateFormat, $this->days, $this->pattern);
+        return $this->parser->parse($this->file->current(), $this->dateFormat, $this->useChannel, $this->useLevel, $this->days, $this->pattern);
     }
 
     /**

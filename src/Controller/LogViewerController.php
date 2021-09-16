@@ -31,18 +31,19 @@ class LogViewerController extends AbstractController
 	    $logs = $this->logList->getLogList();
 		$context = [];
 
-        if(!file_exists($logs[$id]['path'])){
+        if(!file_exists($logs[$id]->getPath())){
 	        throw new FileNotFoundException(sprintf("Log file \"%s\" was not found!", $logs[$id]['path']));
         }
 
         if($delete) {
-            unlink($logs[$id]['path']);
+            unlink($logs[$id]->getPath());
             return $this->redirectToRoute('_log_viewer_list');
         }
 
-        $reader = new LogReader($logs[$id]['path'], $logs[$id]['date_format'], $logs[$id]['days']);
-        if(!is_null($logs[$id]['pattern'])){
-        	$reader->getParser()->registerPattern('NewPattern', $logs[$id]['pattern']);
+        $reader = new LogReader($logs[$id]);
+
+        if(!is_null($logs[$id]->getPattern())){
+        	$reader->getParser()->registerPattern('NewPattern', $logs[$id]->getPattern());
         	$reader->setPattern('NewPattern');
         }
 
@@ -51,7 +52,7 @@ class LogViewerController extends AbstractController
 	    	try{
 				$lines[] = [
 					'dateTime' => $line['date'],
-					'type' => $line['logger'],
+					'channel' => $line['channel'],
 					'level' => $line['level'],
 					'message' => $line['message'],
 				];
@@ -67,7 +68,9 @@ class LogViewerController extends AbstractController
 	    	$context['noLog'] = true;
 	    }
 
-	    $context['levels'] = $logs[$id]['levels'];
+	    $context['levels'] = $logs[$id]->getLevels();
+        $context['use_channel'] = $logs[$id]->isUseChannel();
+        $context['use_level'] = $logs[$id]->isUseLevel();
 
         return $this->render('@EvotodiLogViewer/logView.html.twig', $context);
     }

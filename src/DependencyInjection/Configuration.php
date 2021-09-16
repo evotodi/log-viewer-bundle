@@ -24,6 +24,8 @@ class Configuration implements ConfigurationInterface
 						->integerNode('days')->info('Number of days to pull from log. See ddtraceweb/monolog-parser.')->defaultValue(0)->end()
 						->scalarNode('pattern')->info('See ddtraceweb/monolog-parser for patterns.')->defaultNull()->end()
 						->scalarNode('date_format')->info('PHP style date format of log file')->defaultValue('Y-m-d H:i:s')->end()
+                        ->booleanNode('use_channel')->defaultTrue()->info('Pattern has P<logger>')->end()
+                        ->booleanNode('use_level')->defaultTrue()->info('Pattern has P<level>')->end()
 						->arrayNode('levels')
 							->info('Log level spelling. Case sensitive')
 							->addDefaultsIfNotSet()

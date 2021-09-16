@@ -3,7 +3,9 @@
 namespace Evotodi\LogViewerBundle\Service;
 
 
+use Evotodi\LogViewerBundle\Models\LogFile;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 class LogList
@@ -36,6 +38,9 @@ class LogList
         }
     }
 
+    /**
+     * @return LogFile[]
+     */
 	public function getLogList(): array
     {
 	    $logs = [];
@@ -47,20 +52,47 @@ class LogList
             $finder->files()->in($this->parameterBag->get('kernel.logs_dir'));
 
 		    foreach ($finder as $file){
-			    $logs[] = ['id' => $id, 'name' => $file->getFilename(), 'path' => $file->getRealPath(), 'pattern' => $this->appPattern, 'days' => 0, 'date_format' => $this->appDateFormat, 'exists' => true, 'levels' => $this->levels];
+                $l = new LogFile();
+                $l->setId($id);
+                $l->setName($file->getFilename());
+                $l->setPath($file->getRealPath());
+                $l->setPattern($this->appPattern);
+                $l->setDateFormat($this->appDateFormat);
+                $l->setExists(true);
+                $l->setLevels($this->levels);
+                $l->setSize($file->getSize());
+                $l->setMTime($file->getMTime());
+                $logs[] = $l;
 			    $id++;
 		    }
 	    }
 
 	    foreach ($this->logFiles as $logFile){
+            $stats = ['size' => 0, 'mtime' => 0];
 	    	$exists = true;
 	    	if(!file_exists($logFile['path'])){
 	    		$exists = false;
-		    }
+		    }else{
+                $stats = stat($logFile['path']);
+            }
 		    if(is_null($logFile['name'])){
 			    $logFile['name'] = basename($logFile['path']);
 		    }
-		    $logs[] = ['id' => $id, 'name' => $logFile['name'], 'path' => $logFile['path'], 'pattern' => $logFile['pattern'], 'days' => $logFile['days'], 'date_format' => $logFile['date_format'], 'exists' => $exists, 'levels' => $logFile['levels']];
+
+            $l = new LogFile();
+            $l->setId($id);
+            $l->setName($logFile['name']);
+            $l->setPath($logFile['path']);
+            $l->setPattern($logFile['pattern']);
+            $l->setDays($logFile['days']);
+            $l->setDateFormat($logFile['date_format']);
+            $l->setExists($exists);
+            $l->setLevels($logFile['levels']);
+            $l->setUseChannel($logFile['use_channel']);
+            $l->setUseLevel($logFile['use_level']);
+            $l->setSize($stats['size']);
+            $l->setMTime($stats['mtime']);
+            $logs[] = $l;
 		    $id++;
 	    }
         return $logs;

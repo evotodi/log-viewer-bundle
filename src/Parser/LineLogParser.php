@@ -19,38 +19,34 @@ class LineLogParser implements LogParserInterface
 {
 
     protected array $pattern = [
-        'default' => '/\[(?P<date>.*)\] (?P<logger>\w+).(?P<level>\w+): (?P<message>[^\[\{].*[\]\}])/',
+        'default' => '/\[(?P<date>.*)\] (?P<channel>\w+).(?P<level>\w+): (?P<message>[^\[\{].*[\]\}])/',
     ];
 
 
 	/**
 	 * @throws Exception
 	 */
-    public function parse(string $log, string $dateFormat, int $days = 1, string $pattern = 'default'): array
+    public function parse(string $log, string $dateFormat, bool $useChannel, bool $useLevel, int $days = 1, string $pattern = 'default'): array
     {
         if (!is_string($log) || strlen($log) === 0) {
             return array();
         }
-
         preg_match($this->pattern[$pattern], $log, $data);
-
         if (!isset($data['date'])) {
             return array();
         }
-
         $date = DateTime::createFromFormat($dateFormat, $data['date']);
 
         $array = array(
             'date'    => $date,
-            'logger'  => $data['logger'],
-            'level'   => $data['level'],
+            'channel'  => $useChannel ? $data['channel'] : '',
+            'level'   => $useLevel ? $data['level'] : '',
             'message' => $data['message']
         );
 
         if (0 === $days) {
             return $array;
         }
-
         if (isset($date) && $date instanceof DateTime) {
             $d2 = new DateTime('now');
 
