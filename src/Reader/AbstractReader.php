@@ -15,10 +15,7 @@ use Evotodi\LogViewerBundle\Parser\LineLogParser;
 
 class AbstractReader
 {
-	/**
-	 * @return LineLogParser
-	 */
-    protected function getDefaultParser()
+    protected function getDefaultParser(): LineLogParser
     {
 	    return new LineLogParser();
     }

@@ -57,6 +57,12 @@ evo_log_viewer:
 
     # Show App logs in var/log
     show_app_logs: true
+    
+    # (Optional) Change the default parser pattern
+    app_pattern: '/\[(?P<date>.*)\] (?P<logger>\w+).(?P<level>\w+): (?P<message>[^\[\{].*[\]\}])/'
+    
+    # (Optional) Change the default date format
+    app_date_format: 'Y-m-d H:i:s'
 ```
 ## Advanced Configuration
 

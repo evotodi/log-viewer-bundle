@@ -14,12 +14,7 @@ namespace Evotodi\LogViewerBundle\Parser;
 interface LogParserInterface
 {
 	/**
-	 * @param $log
-	 * @param $days
-	 * @param $pattern
-	 *
-	 * @param $dateFormat
 	 * @return mixed
 	 */
-    public function parse($log, $dateFormat, $days, $pattern);
+    public function parse(string $log, string $dateFormat, int $days, string $pattern);
 }

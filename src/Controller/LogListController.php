@@ -17,8 +17,8 @@ class LogListController extends AbstractController implements ServiceSubscriberI
 	}
 
 	/**
-	 * @return Response
-	 */
+     * @noinspection PhpUnused
+     */
     public function logListAction(): Response
     {
 		$logs = $this->logList->getLogList();

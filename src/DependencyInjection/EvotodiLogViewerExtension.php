@@ -11,14 +11,11 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class EvotodiLogViewerExtension extends Extension
 {
 
-	/**
-	 * @param array $configs
-	 * @param ContainerBuilder $container
-	 * @return array
-	 * @throws Exception
-	 */
-	public function load(array $configs, ContainerBuilder $container)
-	{
+    /**
+     * @throws Exception
+     */
+    public function load(array $configs, ContainerBuilder $container): array
+    {
 		$loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
 		$loader->load('evo_log_viewer.xml');
 
@@ -28,12 +25,14 @@ class EvotodiLogViewerExtension extends Extension
 		$definition = $container->getDefinition('evotodi_log_list.log_list_service');
 		$definition->replaceArgument(1, $config['log_files']);
 		$definition->replaceArgument(2, $config['show_app_logs']);
+        $definition->replaceArgument(3, $config['app_pattern']);
+        $definition->replaceArgument(4, $config['app_date_format']);
 
 		return $config;
 	}
 
-	public function getAlias()
-	{
+	public function getAlias(): string
+    {
 		return 'evo_log_viewer';
 	}
 

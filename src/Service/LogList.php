@@ -11,6 +11,9 @@ class LogList
 	private ParameterBagInterface $parameterBag;
 	private array $logFiles;
 	private bool $useAppLogs;
+    private ?string $appPattern;
+    private ?string $appDateFormat;
+
 	protected array $levels = [
 		"debug" => "DEBUG",
         "info" => "INFO",
@@ -21,12 +24,17 @@ class LogList
         "critical" => "CRITICAL",
         "emergency" => "EMERGENCY",
 	];
-	public function __construct(ParameterBagInterface $parameterBag, array $logFiles, bool $useAppLogs = false)
+	public function __construct(ParameterBagInterface $parameterBag, array $logFiles, bool $useAppLogs = false, ?string $appPattern = null, ?string $appDateFormat = null)
 	{
 		$this->parameterBag = $parameterBag;
 		$this->logFiles = $logFiles;
 		$this->useAppLogs = $useAppLogs;
-	}
+        $this->appPattern = $appPattern;
+        $this->appDateFormat = $appDateFormat;
+        if(is_null($this->appDateFormat)){
+            $this->appDateFormat = 'Y-m-d H:i:s';
+        }
+    }
 
 	public function getLogList(): array
     {
@@ -35,9 +43,11 @@ class LogList
 
 	    if($this->useAppLogs){
 		    $finder = new Finder();
-		    $finder->files()->in($this->parameterBag->get('kernel.logs_dir'));
+            /** @noinspection MissingService */
+            $finder->files()->in($this->parameterBag->get('kernel.logs_dir'));
+
 		    foreach ($finder as $file){
-			    $logs[] = ['id' => $id, 'name' => $file->getFilename(), 'path' => $file->getRealPath(), 'pattern' => null, 'days' => 0, 'date_format' => 'Y-m-d H:i:s', 'exists' => true, 'levels' => $this->levels];
+			    $logs[] = ['id' => $id, 'name' => $file->getFilename(), 'path' => $file->getRealPath(), 'pattern' => $this->appPattern, 'days' => 0, 'date_format' => $this->appDateFormat, 'exists' => true, 'levels' => $this->levels];
 			    $id++;
 		    }
 	    }

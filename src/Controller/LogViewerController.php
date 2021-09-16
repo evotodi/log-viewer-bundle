@@ -22,6 +22,7 @@ class LogViewerController extends AbstractController
 	/**
      * @param Request $request
      * @return Response
+     * @noinspection PhpUnused
      */
     public function logViewAction(Request $request): Response
     {

@@ -22,33 +22,16 @@ use SplFileObject;
 
 class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countable
 {
-    /**
-     * @var SplFileObject
-     */
-    protected $file;
+    protected SplFileObject $file;
+    protected int $lineCount;
+    protected LogParserInterface $parser;
 
-    /**
-     * @var integer
-     */
-    protected $lineCount;
-
-    /**
-     * @var $parser LogParserInterface
-     */
-    protected $parser;
-
-    public $days;
-    public $pattern;
-	public $dateFormat;
+    public int $days;
+    public string $pattern;
+	public string $dateFormat;
 
 
-	/**
-	 * @param        $file
-	 * @param int $days
-	 * @param string $pattern
-	 * @param $dateFormat
-	 */
-    public function __construct($file, $dateFormat, $days = 1, $pattern = 'default')
+    public function __construct($file, $dateFormat, int $days = 1, string $pattern = 'default')
     {
         $this->file = new SplFileObject($file, 'r');
         $i          = 0;
@@ -71,14 +54,11 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
      */
     public function getParser()
     {
+        /** @noinspection PhpUnnecessaryLocalVariableInspection */
         $p =  & $this->parser;
         return $p;
     }
-
-    /**
-     * @param string $pattern
-     */
-    public function setPattern( $pattern = 'default' )
+    public function setPattern(string $pattern = 'default' )
     {
         $this->pattern = $pattern;
     }
@@ -86,7 +66,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
     /**
      * {@inheritdoc}
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->lineCount < $offset;
     }
@@ -158,7 +138,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
     /**
      * {@inheritdoc}
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->file->valid();
     }
@@ -166,7 +146,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
     /**
      * {@inheritdoc}
      */
-    public function count()
+    public function count(): int
     {
         return $this->lineCount;
     }

@@ -8,8 +8,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
 
-	public function getConfigTreeBuilder()
-	{
+	public function getConfigTreeBuilder(): TreeBuilder
+    {
 		$treeBuilder = new TreeBuilder('evotodi_log_viewer');
 		$rootNode = $treeBuilder->getRootNode();
 
@@ -42,6 +42,8 @@ class Configuration implements ConfigurationInterface
 				->end()
 			->end()
 			->booleanNode('show_app_logs')->defaultTrue()->info('Show App logs in var/log')->end()
+            ->scalarNode('app_pattern')->info('See ddtraceweb/monolog-parser for patterns.')->defaultNull()->end()
+            ->scalarNode('app_date_format')->info('PHP style date format of app log files')->defaultNull()->end()
 		->end();
 
 		return $treeBuilder;

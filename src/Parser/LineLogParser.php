@@ -18,21 +18,15 @@ use RuntimeException;
 class LineLogParser implements LogParserInterface
 {
 
-    protected $pattern = [
+    protected array $pattern = [
         'default' => '/\[(?P<date>.*)\] (?P<logger>\w+).(?P<level>\w+): (?P<message>[^\[\{].*[\]\}])/',
     ];
 
 
 	/**
-	 * @param string $log
-	 * @param int $days
-	 * @param string $pattern
-	 *
-	 * @param string $dateFormat
-	 * @return array
 	 * @throws Exception
 	 */
-    public function parse($log, $dateFormat, $days = 1, $pattern = 'default')
+    public function parse(string $log, string $dateFormat, int $days = 1, string $pattern = 'default'): array
     {
         if (!is_string($log) || strlen($log) === 0) {
             return array();
@@ -70,12 +64,9 @@ class LineLogParser implements LogParserInterface
     }
 
     /**
-     * @param string $name
-     * @param string $pattern
-     *
      * @throws RuntimeException
      */
-    public function registerPattern($name, $pattern)
+    public function registerPattern(string $name, string $pattern)
     {
         if (!isset($this->pattern[$name])) {
             $this->pattern[$name] = $pattern;

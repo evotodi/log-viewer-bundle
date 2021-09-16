@@ -11,6 +11,8 @@
             <argument type="service" id="parameter_bag" />
             <argument/>
             <argument/>
+            <argument/>
+            <argument/>
         </service>
         <service id="Evotodi\LogViewerBundle\Service\LogList" alias="evotodi_log_list.log_list_service"/>
 
@@ -29,8 +31,5 @@
             </call>
         </service>
         <service id="Evotodi\LogViewerBundle\Controller\LogViewerController" alias="evotodi_log_viewer.log_list_controller"/>
-
-
-
     </services>
 </container>
