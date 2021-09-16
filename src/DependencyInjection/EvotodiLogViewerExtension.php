@@ -27,6 +27,7 @@ class EvotodiLogViewerExtension extends Extension
 		$definition->replaceArgument(2, $config['show_app_logs']);
         $definition->replaceArgument(3, $config['app_pattern']);
         $definition->replaceArgument(4, $config['app_date_format']);
+        $definition->replaceArgument(5, $config['logs_reverse']);
 
 		return $config;
 	}

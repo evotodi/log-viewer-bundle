@@ -5,7 +5,6 @@ namespace Evotodi\LogViewerBundle\Service;
 
 use Evotodi\LogViewerBundle\Models\LogFile;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 class LogList
@@ -15,6 +14,7 @@ class LogList
 	private bool $useAppLogs;
     private ?string $appPattern;
     private ?string $appDateFormat;
+    private ?bool $logsReverse;
 
 	protected array $levels = [
 		"debug" => "DEBUG",
@@ -26,13 +26,16 @@ class LogList
         "critical" => "CRITICAL",
         "emergency" => "EMERGENCY",
 	];
-	public function __construct(ParameterBagInterface $parameterBag, array $logFiles, bool $useAppLogs = false, ?string $appPattern = null, ?string $appDateFormat = null)
+
+	public function __construct(ParameterBagInterface $parameterBag, array $logFiles, bool $useAppLogs = false, ?string $appPattern = null, ?string $appDateFormat = null, ?bool $logsReverse = null)
 	{
 		$this->parameterBag = $parameterBag;
 		$this->logFiles = $logFiles;
 		$this->useAppLogs = $useAppLogs;
         $this->appPattern = $appPattern;
         $this->appDateFormat = $appDateFormat;
+        $this->logsReverse = $logsReverse;
+
         if(is_null($this->appDateFormat)){
             $this->appDateFormat = 'Y-m-d H:i:s';
         }
@@ -96,5 +99,10 @@ class LogList
 		    $id++;
 	    }
         return $logs;
+    }
+
+    public function getLogsReverse(): ?bool
+    {
+        return $this->logsReverse;
     }
 }

@@ -13,6 +13,7 @@
             <argument/>
             <argument/>
             <argument/>
+            <argument/>
         </service>
         <service id="Evotodi\LogViewerBundle\Service\LogList" alias="evotodi_log_list.log_list_service"/>
 

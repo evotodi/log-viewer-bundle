@@ -63,7 +63,11 @@ class LogViewerController extends AbstractController
 	    }
 
 	    if(!empty($lines)){
-	    	$context['log'] = $lines;
+            if($this->logList->getLogsReverse()) {
+                $context['log'] = array_reverse($lines);
+            }else {
+                $context['log'] = $lines;
+            }
 	    }else{
 	    	$context['noLog'] = true;
 	    }

@@ -46,6 +46,7 @@ class Configuration implements ConfigurationInterface
 			->booleanNode('show_app_logs')->defaultTrue()->info('Show App logs in var/log')->end()
             ->scalarNode('app_pattern')->info('See ddtraceweb/monolog-parser for patterns.')->defaultNull()->end()
             ->scalarNode('app_date_format')->info('PHP style date format of app log files')->defaultNull()->end()
+            ->booleanNode('logs_reverse')->defaultFalse()->info('Show log file as newest at the top')->end()
 		->end();
 
 		return $treeBuilder;
