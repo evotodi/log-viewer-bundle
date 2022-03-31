@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.4|^8",
+        "php": "^8",
         "jdorn/sql-formatter": "^1.2"
     },
     "require-dev": {

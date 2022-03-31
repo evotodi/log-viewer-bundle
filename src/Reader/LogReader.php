@@ -54,10 +54,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
         $this->parser = $this->getDefaultParser();
     }
 
-    /**
-     * @return LineLogParser|LogParserInterface
-     */
-    public function getParser()
+    public function getParser(): LogParserInterface|LineLogParser
     {
         /** @noinspection PhpUnnecessaryLocalVariableInspection */
         $p =  & $this->parser;
@@ -78,10 +75,9 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
 
 	/**
 	 * {@inheritdoc}
-     * @return mixed
 	 * @throws Exception
 	 */
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         $key = $this->file->key();
         $this->file->seek($offset);
@@ -126,10 +122,9 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
 
 	/**
 	 * {@inheritdoc}
-     * @return mixed
 	 * @throws Exception
 	 */
-    public function current()
+    public function current(): mixed
     {
         return $this->parser->parse($this->file->current(), $this->dateFormat, $this->useChannel, $this->useLevel, $this->days, $this->pattern);
     }
