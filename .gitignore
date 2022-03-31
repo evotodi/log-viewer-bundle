@@ -10,3 +10,4 @@ build/logs/
 /config/
 .idea/
 var/
+/.phpunit.result.cache
