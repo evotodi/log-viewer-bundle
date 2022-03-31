@@ -78,6 +78,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
 
 	/**
 	 * {@inheritdoc}
+     * @return mixed
 	 * @throws Exception
 	 */
     public function offsetGet($offset)
@@ -94,7 +95,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
     /**
      * {@inheritdoc}
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new RuntimeException("LogReader is read-only.");
     }
@@ -102,7 +103,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
     /**
      * {@inheritdoc}
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new RuntimeException("LogReader is read-only.");
     }
@@ -110,7 +111,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
     /**
      * {@inheritdoc}
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->file->rewind();
     }
@@ -118,13 +119,14 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
     /**
      * {@inheritdoc}
      */
-    public function next()
+    public function next(): void
     {
         $this->file->next();
     }
 
 	/**
 	 * {@inheritdoc}
+     * @return mixed
 	 * @throws Exception
 	 */
     public function current()
@@ -135,7 +137,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
     /**
      * {@inheritdoc}
      */
-    public function key()
+    public function key(): int
     {
         return $this->file->key();
     }
