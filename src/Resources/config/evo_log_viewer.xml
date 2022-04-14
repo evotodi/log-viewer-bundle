@@ -19,6 +19,8 @@
 
         <service id="evotodi_log_viewer.log_list_controller" class="Evotodi\LogViewerBundle\Controller\LogListController" public="true">
             <argument type="service" id="evotodi_log_list.log_list_service" />
+            <argument type="service" id="twig" />
+            <tag name="controller.service_arguments" />
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>
@@ -27,6 +29,8 @@
 
         <service id="evotodi_log_viewer.log_viewer_controller" class="Evotodi\LogViewerBundle\Controller\LogViewerController" public="true">
             <argument type="service" id="evotodi_log_list.log_list_service" />
+            <argument type="service" id="twig" />
+            <tag name="controller.service_arguments" />
             <call method="setContainer">
                 <argument type="service" id="service_container" />
             </call>

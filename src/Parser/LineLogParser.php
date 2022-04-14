@@ -28,7 +28,7 @@ class LineLogParser implements LogParserInterface
 	 */
     public function parse(string $log, string $dateFormat, bool $useChannel, bool $useLevel, int $days = 1, string $pattern = 'default'): array
     {
-        if (!is_string($log) || strlen($log) === 0) {
+        if (strlen($log) === 0) {
             return array();
         }
         preg_match($this->pattern[$pattern], $log, $data);

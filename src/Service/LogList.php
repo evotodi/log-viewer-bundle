@@ -51,7 +51,6 @@ class LogList
 
 	    if($this->useAppLogs){
 		    $finder = new Finder();
-            /** @noinspection MissingService */
             $finder->files()->in($this->parameterBag->get('kernel.logs_dir'));
 
 		    foreach ($finder as $file){

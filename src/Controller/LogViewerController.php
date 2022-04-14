@@ -9,15 +9,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 class LogViewerController extends AbstractController
 {
-	private LogList $logList;
+    private LogList $logList;
+    private Environment $twig;
 
-	public function __construct(LogList $logList)
-	{
-		$this->logList = $logList;
-	}
+    public function __construct(LogList $logList, Environment $twig)
+    {
+        $this->logList = $logList;
+        $this->twig = $twig;
+    }
 
 	/**
      * @param Request $request
@@ -76,6 +79,6 @@ class LogViewerController extends AbstractController
         $context['use_channel'] = $logs[$id]->isUseChannel();
         $context['use_level'] = $logs[$id]->isUseLevel();
 
-        return $this->render('@EvotodiLogViewer/logView.html.twig', $context);
+        return new Response($this->twig->render('@EvotodiLogViewer/logView.html.twig', $context));
     }
 }
