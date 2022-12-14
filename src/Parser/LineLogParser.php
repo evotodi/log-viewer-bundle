@@ -35,7 +35,11 @@ class LineLogParser implements LogParserInterface
         if (!isset($data['date'])) {
             return array();
         }
-        $date = DateTime::createFromFormat($dateFormat, $data['date']);
+        try {
+            $date = new DateTime($data['date']);
+        } catch (Exception $e) {
+            $date = false;
+        }
 
         $array = array(
             'date'    => $date,
