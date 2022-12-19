@@ -1,8 +1,9 @@
 {% extends '@EvotodiLogViewer/base_content.html.twig' %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('bundles/evotodilogviewer/css/log-viewer.css') }}">
-<link rel="stylesheet" href="{{ asset('bundles/evotodilogviewer/vendor/highlight/styles/darcula.css') }}">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/evotodilogviewer/css/log-viewer.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/evotodilogviewer/vendor/highlight/styles/darcula.css') }}">
 {% endblock %}
 
 {% block content_body %}
@@ -97,7 +98,8 @@
 {% endblock %}
 
 {% block javascripts %}
-<script type="application/javascript" src="{{ asset('bundles/evotodilogviewer/js/log-viewer.js') }}"></script>
-<script type="application/javascript" src="{{ asset('bundles/evotodilogviewer/vendor/highlight/highlight.pack.js') }}"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+    {{ parent() }}
+    <script type="application/javascript" src="{{ asset('bundles/evotodilogviewer/js/log-viewer.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('bundles/evotodilogviewer/vendor/highlight/highlight.pack.js') }}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 {% endblock %}

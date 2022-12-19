@@ -12,6 +12,17 @@ Install the package with:
 ```console
 composer require evotodi/log-viewer-bundle
 ```
+
+## Suggested Packages
+Install nesbot/carbon for datetime parsing and enable in config
+```console
+composer require nesbot/carbon
+```
+```yaml
+evo_log_viewer:
+    log_files:
+        use_carbon: true
+```
 ##  Configuration
 
 Create the routes yaml file `config/routes/evo_log_viewer_routes.yaml`
@@ -72,6 +83,10 @@ evo_log_viewer:
     
     # (Optional) Change the default date format
     app_date_format: 'Y-m-d H:i:s'
+    
+    # (Optional) Use nesbot/Carbon for datetime parsing
+    # Execute 'composer require nesbot/carbon' before setting to true
+    use_carbon: false
 ```
 ## Advanced Configuration
 
@@ -88,7 +103,7 @@ See ddtraceweb/monolog-parser for other examples but ommit `P<context>` and `P<e
 Setting days in the config to 0 will parse to whole log which is the default. Days set to 5 for example will parse the log until the date portion of the pattern
 if greater than DateTime('now') minus 5 days.
 
-#### date_format
+#### date_format (optional)
 This should be the php date format of the date portion of the pattern. Default is Y-m-d H:i:s
 /
 [PHP DateFormat](https://www.php.net/manual/en/function.date.php)

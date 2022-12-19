@@ -25,6 +25,7 @@ class LogFile
     private ?int $size = null;
     private ?string $mTime = null;
     private bool $exists = true;
+    private bool $useCarbon = false;
 
     public function getId(): int
     {
@@ -146,4 +147,13 @@ class LogFile
         $this->exists = $exists;
     }
 
+    public function useCarbon(): bool
+    {
+        return $this->useCarbon;
+    }
+
+    public function setUseCarbon(bool $useCarbon): void
+    {
+        $this->useCarbon = $useCarbon;
+    }
 }

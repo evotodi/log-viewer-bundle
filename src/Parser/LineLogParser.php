@@ -12,6 +12,7 @@
 namespace Evotodi\LogViewerBundle\Parser;
 
 use DateTime;
+use Evotodi\LogViewerBundle\Models\LogFile;
 use Exception;
 use RuntimeException;
 
@@ -26,16 +27,41 @@ class LineLogParser implements LogParserInterface
 	/**
 	 * @throws Exception
 	 */
-    public function parse(string $log, string $dateFormat, bool $useChannel, bool $useLevel, int $days = 1, string $pattern = 'default'): array
+    public function parse(string $logLine, LogFile $logFile, ?string $dateFormat, bool $useChannel, bool $useLevel, int $days = 1, string $pattern = 'default', bool $useCarbon = false): array
     {
-        if (strlen($log) === 0) {
+        if (strlen($logLine) === 0) {
             return array();
         }
-        preg_match($this->pattern[$pattern], $log, $data);
+        preg_match($this->pattern[$pattern], $logLine, $data);
         if (!isset($data['date'])) {
             return array();
         }
-        $date = DateTime::createFromFormat($dateFormat, $data['date']);
+
+        if ($useCarbon){
+            if(is_null($dateFormat)){
+                try {
+                    $date = new \Carbon\Carbon($data['date']);
+                } catch (\Carbon\Exceptions\InvalidFormatException) {
+                    $date = false;
+                }
+            } else {
+                try {
+                    $date = \Carbon\Carbon::createFromFormat($dateFormat, $data['date']);
+                } catch (\Carbon\Exceptions\InvalidFormatException $e) {
+                    throw new \Carbon\Exceptions\InvalidFormatException(sprintf("Invalid date_format in evo_log_viewer for logfile %s", $logFile->getPath()));
+                }
+            }
+        }else{
+            if (is_null($dateFormat)) {
+                try {
+                    $date = new DateTime($data['date']);
+                } catch (Exception $e) {
+                    $date = false;
+                }
+            }else{
+                $date = DateTime::createFromFormat($dateFormat, $data['date']);
+            }
+        }
 
         $array = array(
             'date'    => $date,

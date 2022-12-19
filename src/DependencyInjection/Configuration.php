@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
 						->scalarNode('name')->info("Pretty name to display else file name")->defaultNull()->end()
 						->integerNode('days')->info('Number of days to pull from log. See ddtraceweb/monolog-parser.')->defaultValue(0)->end()
 						->scalarNode('pattern')->info('See ddtraceweb/monolog-parser for patterns.')->defaultNull()->end()
-						->scalarNode('date_format')->info('PHP style date format of log file')->defaultValue('Y-m-d H:i:s')->end()
+						->scalarNode('date_format')->info('PHP style date format of log file')->defaultNull()->end()
                         ->booleanNode('use_channel')->defaultTrue()->info('Pattern has P<logger>')->end()
                         ->booleanNode('use_level')->defaultTrue()->info('Pattern has P<level>')->end()
 						->arrayNode('levels')
@@ -47,6 +47,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('app_pattern')->info('See ddtraceweb/monolog-parser for patterns.')->defaultNull()->end()
             ->scalarNode('app_date_format')->info('PHP style date format of app log files')->defaultNull()->end()
             ->booleanNode('logs_reverse')->defaultFalse()->info('Show log file as newest at the top')->end()
+            ->booleanNode('use_carbon')->defaultFalse()->info('Use nesbot/carbon for date parsing')->end()
 		->end();
 
 		return $treeBuilder;

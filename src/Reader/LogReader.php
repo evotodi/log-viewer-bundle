@@ -23,19 +23,22 @@ use SplFileObject;
 
 class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countable
 {
+    protected LogFile $logFile;
     protected SplFileObject $file;
     protected int $lineCount;
     protected LogParserInterface $parser;
 
     public int $days;
     public string $pattern;
-	public string $dateFormat;
+	public ?string $dateFormat;
     public bool $useChannel;
     public bool $useLevel;
+    public bool $useCarbon;
 
 
     public function __construct(LogFile $logFile, string $pattern = 'default')
     {
+        $this->logFile = $logFile;
         $this->file = new SplFileObject($logFile->getPath(), 'r');
         $i          = 0;
         while (!$this->file->eof()) {
@@ -49,6 +52,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
 		$this->dateFormat = $logFile->getDateFormat();
         $this->useChannel = $logFile->isUseChannel();
         $this->useLevel = $logFile->isUseLevel();
+        $this->useCarbon = $logFile->useCarbon();
 
         $this->lineCount = $i;
         $this->parser = $this->getDefaultParser();
@@ -126,7 +130,7 @@ class LogReader extends AbstractReader implements Iterator, ArrayAccess, Countab
 	 */
     public function current(): mixed
     {
-        return $this->parser->parse($this->file->current(), $this->dateFormat, $this->useChannel, $this->useLevel, $this->days, $this->pattern);
+        return $this->parser->parse($this->file->current(), $this->logFile, $this->dateFormat, $this->useChannel, $this->useLevel, $this->days, $this->pattern, $this->useCarbon);
     }
 
     /**

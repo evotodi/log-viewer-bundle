@@ -28,6 +28,13 @@ class EvotodiLogViewerExtension extends Extension
         $definition->replaceArgument(3, $config['app_pattern']);
         $definition->replaceArgument(4, $config['app_date_format']);
         $definition->replaceArgument(5, $config['logs_reverse']);
+        $definition->replaceArgument(6, $config['use_carbon']);
+
+        if ($config['use_carbon']) {
+            if (!class_exists("Carbon\Carbon")) {
+                throw new \InvalidArgumentException("Your evo_log_viewer config has use_carbon set to true but nesbot/carbon is not installed. Please run 'composer require nesbot/carbon'");
+            }
+        }
 
 		return $config;
 	}

@@ -11,7 +11,9 @@
 
 namespace Evotodi\LogViewerBundle\Parser;
 
+use Evotodi\LogViewerBundle\Models\LogFile;
+
 interface LogParserInterface
 {
-    public function parse(string $log, string $dateFormat, bool $useChannel, bool $useLevel, int $days, string $pattern): mixed;
+    public function parse(string $logLine, LogFile $logFile, ?string $dateFormat, bool $useChannel, bool $useLevel, int $days, string $pattern, bool $useCarbon): mixed;
 }

@@ -15,6 +15,7 @@ class LogList
     private ?string $appPattern;
     private ?string $appDateFormat;
     private ?bool $logsReverse;
+    private bool $useCarbon;
 
 	protected array $levels = [
 		"debug" => "DEBUG",
@@ -27,7 +28,7 @@ class LogList
         "emergency" => "EMERGENCY",
 	];
 
-	public function __construct(ParameterBagInterface $parameterBag, array $logFiles, bool $useAppLogs = false, ?string $appPattern = null, ?string $appDateFormat = null, ?bool $logsReverse = null)
+	public function __construct(ParameterBagInterface $parameterBag, array $logFiles, bool $useAppLogs = false, ?string $appPattern = null, ?string $appDateFormat = null, ?bool $logsReverse = null, bool $useCarbon = false)
 	{
 		$this->parameterBag = $parameterBag;
 		$this->logFiles = $logFiles;
@@ -35,10 +36,11 @@ class LogList
         $this->appPattern = $appPattern;
         $this->appDateFormat = $appDateFormat;
         $this->logsReverse = $logsReverse;
+        $this->useCarbon = $useCarbon;
 
-        if(is_null($this->appDateFormat)){
-            $this->appDateFormat = 'Y-m-d H:i:s';
-        }
+        //if(is_null($this->appDateFormat)){
+        //    $this->appDateFormat = 'Y-m-d H:i:s';
+        //}
     }
 
     /**
@@ -64,6 +66,7 @@ class LogList
                 $l->setLevels($this->levels);
                 $l->setSize($file->getSize());
                 $l->setMTime($file->getMTime());
+                $l->setUseCarbon($this->useCarbon);
                 $logs[] = $l;
 			    $id++;
 		    }
@@ -94,6 +97,7 @@ class LogList
             $l->setUseLevel($logFile['use_level']);
             $l->setSize($stats['size']);
             $l->setMTime($stats['mtime']);
+            $l->setUseCarbon($this->useCarbon);
             $logs[] = $l;
 		    $id++;
 	    }
